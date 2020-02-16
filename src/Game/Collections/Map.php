@@ -2,114 +2,191 @@
 
 namespace Map\Game\Collections;
 
+use Map\Game\Components\Base;
 use Map\Game\Components\Component;
+use Map\Game\Components\Mountain;
+use Map\Game\Components\Plate;
+use Map\Game\Components\Sea;
+use Map\Game\Components\Swamp;
 use Map\Game\Components\Tile;
+use Map\Game\Units\Unit;
 
-class Map implements \Iterator, \Countable
+class Map
 {
-    const MIN = 10000;
-    const MAX = 40000;
-
+    /** @var array  */
     private $tiles = array();
-    private $position;
+    /** @var array  */
+    private $components = array();
+    /** @var array  */
+    private $bases = array();
+    /** @var array  */
+    private $units = array();
+    /** @var int */
+    private $width;
+    /** @var int */
+    private $height;
 
     /**
      * Map constructor.
+     * @param $width
+     * @param $height
      */
-    public function __construct()
+    public function __construct(int $width, int $height)
     {
-        $this->position = 0;
-    }
-
-    /**
-     * @param Tile $tile
-     * @throws \Exception
-     */
-    public function push(Tile $tile)
-    {
-        if($tile instanceof Tile === false) {
-            throw new \Exception('Error type');
-        }
-        array_push($this->tiles,$tile);
-
-    }
-
-    /**
-     *
-     */
-    public function pop()
-    {
-        array_pop($this->tiles);
-    }
-
-    public function rewind()
-    {
-        $this->position = 0;
+        $this->width = $width;
+        $this->height = $height;
     }
 
     /**
      * @return mixed
      */
-    public function current()
+    public function getWidth() : int
     {
-        return $this->tiles[$this->position];
+        return $this->width;
     }
 
     /**
-     * @return int|mixed
+     * @param $width
+     * @return Map
      */
-    public function key()
+    public function setWidth($width): Map
     {
-        return $this->position;
-    }
-
-    public function next()
-    {
-        ++$this->position;
+        $this->width = $width;
+        return $this;
     }
 
     /**
-     * @return bool
+     * @return mixed
      */
-    public function valid()
+    public function getHeight() : int
     {
-        return isset($this->tiles[$this->position]);
-    }
-    /**
-     * @return int
-     */
-    public function count()
-    {
-        return count($this->tiles);
+        return $this->height;
     }
 
     /**
-     * @param int $x
-     * @param int $y
-     * @return bool
+     * @param $height
+     * @return Map
      */
-    public function isFreePosition(int $x, int $y) : bool
+    public function setHeight($height): Map
+    {
+        $this->height = $height;
+        return $this;
+    }
+
+
+    /**
+     * @param array $tiles
+     */
+    public function pushTiles(array $tiles)
     {
         /** @var Tile $tile */
-        foreach ($this as $key => $tile) {
-            if ($tile->getTile()->getX() == $x && $tile->getTile()->getY() == $y) {
-                return false;
-            }
+        foreach ($tiles as $tile) {
+            array_push($this->tiles, $tile);
         }
-        return true;
-
     }
 
     /**
-     * @param Tile $tile1
-     * @param Tile $tile2
-     * @return float
+     * @param Component $component
+     * @throws \Exception
      */
-    public function getLengthBetweenTile(Tile $tile1, Tile $tile2) : float
+    public function pushComponent(Component $component)
     {
-        $length = sqrt( pow(($tile1->getX() - $tile2->getX()),2) + pow(($tile1->getY() - $tile2->getY()),2));
+        array_push($this->components,$component);
+    }
 
-        return round($length, 1);
+    /**
+     * @param Base $base
+     * @throws \Exception
+     */
+    public function pushBase(Base $base)
+    {
+        array_push($this->bases,$base);
+    }
+
+    /**
+     * @param Unit $unit
+     */
+    public function pushUnit(Unit $unit)
+    {
+        array_push($this->units, $unit);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getTiles() : array
+    {
+        return $this->tiles;
+    }
+
+    /**
+     * @return array
+     */
+    public function getComponents() : array
+    {
+        return $this->components;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUnits() : array
+    {
+        return $this->units;
+    }
+
+    /**
+     * @param $type
+     * @return int
+     */
+    public function countComponentsType($type) : int
+    {
+        $count = 0;
+        /** @var Component $component */
+        foreach ($this->components as $component) {
+            if ($component->getType() == $type) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+    /**
+     * @param $type
+     * @return array
+     */
+    public function getComponentsByType($type) : array
+    {
+        $currentComponent = [];
+
+        /** @var Component $component */
+        foreach ($this->components as $component) {
+            if ($component->getType() == $type) {
+                array_push($currentComponent, $component);
+            }
+        }
+        return $currentComponent;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString() : string
+    {
+        $tilesCount = count($this->tiles);
+        $mountainsCount = $this->countComponentsType(Mountain::class);
+        $platesCount = $this->countComponentsType(Plate::class);
+        $swampsCount = $this->countComponentsType(Swamp::class);
+        $seaCount = $this->countComponentsType(Sea::class);
+        $baseCount = count($this->bases);
+        $unitCount = count($this->units);
+
+        return "Map is done \n Size : ".$this->getWidth()." x ". $this->getHeight() . " \n Amount of point: ".$tilesCount.
+            " \n Amount of Mountains: ".$mountainsCount. " \n Amount of Plates: ".$platesCount.
+            " \n Amount of Sea: ".$seaCount. " \n Amount of Swamps: ".$swampsCount.
+            " \n Amount of Base: ".$baseCount. " For two teams \n Amount of Units: ".$unitCount.
+            " \n Ready to attack! ";
     }
 
 }

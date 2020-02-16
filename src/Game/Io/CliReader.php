@@ -17,9 +17,4 @@ class CliReader implements Reader
     {
         return fgets($this->stream);
     }
-
-    public function getStream()
-    {
-        return $this->stream;
-    }
 }

@@ -2,9 +2,11 @@
 
 namespace Map\Game\Units;
 
-use Map\Game\Components\Tile;
+use Map\Game\Components\Component;
+use Map\Game\Interfaces\Team;
+use Map\Game\Interfaces\Type;
 
-class Unit extends Tile
+class Unit implements Type, Team
 {
     /** @var int */
     protected $healthPoint;
@@ -16,6 +18,31 @@ class Unit extends Tile
     protected $team;
     /** @var array  */
     protected $accessAttack = [];
+
+    /** @var string */
+    protected $type;
+
+    /** @var Component */
+    private $component;
+
+    /**
+     * @return string
+     */
+    public function getType() : string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return $this
+     */
+    public function setType($type) : Type
+    {
+        $this->type = $type;
+
+        return $this;
+    }
 
     /**
      * @return int
@@ -39,15 +66,6 @@ class Unit extends Tile
     public function getDamage(): int
     {
         return $this->damage;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getTeam(): int
-    {
-        return $this->team;
     }
 
     /**
@@ -81,21 +99,49 @@ class Unit extends Tile
     }
 
     /**
-     * @param int $team
-     * @return Unit
-     */
-    public function setTeam(int $team): Unit
-    {
-        $this->team = $team;
-        return $this;
-    }
-
-    /**
      * @param Unit $unit
      * @return bool
      */
     public function isCanAttack(Unit $unit): bool
     {
         return (bool)(in_array(get_class($unit), $this->accessAttack) && $this->team != $unit->team);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTeam() : int
+    {
+        return $this->team;
+    }
+
+    /**
+     * @param $team
+     * @return Team
+     */
+    public function setTeam($team) : Team
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * @param Component $component
+     * @return $this
+     */
+    public function setComponent(Component $component)
+    {
+        $this->component = $component;
+
+        return $this;
+    }
+
+    /**
+     * @return Component
+     */
+    public function getComponent()
+    {
+        return $this->component;
     }
 }

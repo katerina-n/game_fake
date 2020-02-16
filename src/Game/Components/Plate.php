@@ -8,6 +8,6 @@ use Map\Game\Units\Warrior;
 
 class Plate extends Component
 {
-    protected $accessFor = [AirCraft::class, Tank::class, Warrior::class, Base::class];
+    protected $accessFor = [AirCraft::class, Tank::class, Warrior::class];
 
 }

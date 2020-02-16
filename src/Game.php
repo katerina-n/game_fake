@@ -2,55 +2,52 @@
 
 namespace Map;
 
+use Map\Game\Builder\BuildBaseWithUnits;
+use Map\Game\Builder\BuildComponents;
 use Map\Game\Collections\Map;
 use Map\Game\Components\Plate;
-use Map\Game\Contracts\Io\Reader;
 use Map\Game\Contracts\Io\Writer;
-use Map\Game\Generators\GenerateSea;
+use Map\Game\Generators\GenerateTiles;
 
 class Game
 {
     /**
-     * @var Storage
-     */
-    public $storage;
-
-    /**
-     * Game constructor.
-     */
-    public function __construct()
-    {
-        $this->storage = new Storage();
-    }
-
-    /**
-     * @param Reader $reader
      * @param Writer $writer
+     * @throws \Exception
      */
-    public function start(Reader $reader, Writer $writer): void
+    public function start(Writer $writer): void
     {
-        $writer->writeln("Hi, engineer! Let's build spaceship");
+        $writer->writeln("Map generator...");
 
-        //while (true) {
-            $this->run($reader, $writer);
-        //}
+        $this->run($writer);
+
     }
 
     /**
-     * @param Reader $reader
      * @param Writer $writer
+     * @throws \Exception
      */
-    public function run(Reader $reader, Writer $writer): void
+    public function run(Writer $writer): void
     {
-        $writer->write('Input :> ');
-        $map = new Map();
-        $sea = new GenerateSea();
-        $sea1 = $sea->generateOnMap($map);
+        $widht = rand(Parameters::MIN_MAP_SIZE, Parameters::MAX_MAP_SIZE);
+        $height = rand(Parameters::MIN_MAP_SIZE, Parameters::MAX_MAP_SIZE);
+        $map = new Map($widht,$height);
 
-        $map->push($sea1->getTile());
-        $sea2 = $sea->generateOnMap($map);
-        $map->push($sea2->getTile());
-        print_r($map);
+        $generateTiles = new GenerateTiles();
+        $tiles = $generateTiles->generateOnMap($map);
 
+        $map->pushTiles($tiles);
+
+        $buildComponents = new BuildComponents();
+        $map = $buildComponents->buildComponents($map);
+        $plates = $map->getComponentsByType(get_class(new Plate));
+        $randomKey = array_rand($plates, 2);
+
+        $buildBaseWithUnits = new BuildBaseWithUnits();
+        $map = $buildBaseWithUnits->buildBaseWithUnits($map, $plates[$randomKey[0]],Parameters::TEAM_1);
+        $map = $buildBaseWithUnits->buildBaseWithUnits($map, $plates[$randomKey[1]],Parameters::TEAM_2);
+
+        $writer->writeln($map);
     }
+
 }

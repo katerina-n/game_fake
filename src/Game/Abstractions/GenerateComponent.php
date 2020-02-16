@@ -2,46 +2,22 @@
 
 namespace Map\Game\Abstractions;
 
-use Map\Game\Collections\Map;
 use Map\Game\Components\Component;
+use Map\Game\Components\Tile;
 
 abstract class GenerateComponent
 {
-    /** @var Map */
-    private $map;
-
     abstract function makeComponent() : Component;
 
     /**
-     * @param Map $map
+     * @param Tile $tile
      * @return Component
      */
-    public function generateOnMap(Map $map)
+    public function generateOnTile(Tile $tile) : Component
     {
-        $this->map = $map;
-        $position = $this->position();
         $component = $this->makeComponent();
-        $component->setTile($position['x'], $position['y'], get_class($component));
+        $component->setTile($tile);
+        $component->setType(get_class($component));
         return $component;
     }
-
-    /**
-     * @return array
-     */
-    private function position()
-    {
-        $randX = rand(Map::MIN, Map::MAX);
-        $randY = rand(Map::MIN, Map::MAX);
-
-        if (!$this->map->isFreePosition($randX, $randY)) {
-            $this->position();
-        }
-
-        return [
-            'x' => $randX,
-            'y' => $randY
-        ];
-
-    }
-
 }

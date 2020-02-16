@@ -22,9 +22,4 @@ class CliWriter implements Writer
     {
         fputs($this->stream, $string);
     }
-
-    public function getStream()
-    {
-        return $this->stream;
-    }
 }

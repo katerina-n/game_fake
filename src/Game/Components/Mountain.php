@@ -8,4 +8,26 @@ use Map\Game\Units\Warrior;
 class Mountain extends Component
 {
     protected $accessFor = [AirCraft::class, Warrior::class];
+
+    /** @var int */
+    private $height;
+
+    /**
+     * @return int
+     */
+    public function getHeight(): int
+    {
+        return $this->height;
+    }
+
+    /**
+     * @param int $height
+     * @return $this
+     */
+    public function setHeight(int $height) : Mountain
+    {
+        $this->height = $height;
+        return $this;
+    }
+
 }

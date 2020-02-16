@@ -4,65 +4,35 @@ namespace Map\Game\Components;
 
 class Tile
 {
-    /** @var float */
+    /** @var int */
     protected $x;
-    /** @var float */
+    /** @var int */
     protected $y;
-    /** @var string */
-    protected $type;
 
     /**
-     * @return float
+     * Tile constructor.
+     * @param $x
+     * @param $y
      */
-    public function getX(): float
+    public function __construct($x, $y)
+    {
+        $this->x = $x;
+        $this->y = $y;
+    }
+
+    /**
+     * @return int
+     */
+    public function getX(): int
     {
         return $this->x;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getY(): float
+    public function getY(): int
     {
         return $this->y;
     }
-
-
-    /**
-     * @return $this
-     */
-    public function getTile()
-    {
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType():string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @param $x
-     * @param $y
-     * @param $type
-     */
-    public function setTile($x, $y, $type)
-    {
-        $this->x = $x;
-        $this->y = $y;
-        $this->type = $type;
-    }
-
-
 }
