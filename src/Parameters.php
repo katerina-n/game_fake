@@ -4,8 +4,8 @@ namespace Map;
 
 class Parameters
 {
-    const MIN_MAP_SIZE = 20;
-    const MAX_MAP_SIZE = 50;
+    const MIN_MAP_SIZE = 10;
+    const MAX_MAP_SIZE = 16;
     const WARRIORS_COUNT = 10;
     const TANKS_COUNT = 10;
     const AIR_CRAFTS_COUNT = 10;
@@ -23,4 +23,10 @@ class Parameters
     const WARRIOR_ATTACK_RANGE = 50;
     const WARRIOR_DAMAGE = 10;
 
+    const VIEW_BASE = '☗';
+    const VIEW_MOUNTAIN = '⋀';
+    const VIEW_PLATE = '▬';
+    const VIEW_SEA = '≋';
+    const VIEW_SWAMP = '◌';
+    const VIEW_TILE = '▪';
 }

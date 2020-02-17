@@ -35,4 +35,12 @@ class Tile
     {
         return $this->y;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString() : string
+    {
+        return '('.$this->x.' ,'.$this->y.')';
+    }
 }

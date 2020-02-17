@@ -137,6 +137,14 @@ class Map
     }
 
     /**
+     * @return array
+     */
+    public function getBases() : array
+    {
+        return $this->bases;
+    }
+
+    /**
      * @param $type
      * @return int
      */
@@ -182,7 +190,7 @@ class Map
         $baseCount = count($this->bases);
         $unitCount = count($this->units);
 
-        return "Map is done \n Size : ".$this->getWidth()." x ". $this->getHeight() . " \n Amount of point: ".$tilesCount.
+        return "Map is done! \n Size : ".$this->getWidth()." x ". $this->getHeight() . " \n Amount of point: ".$tilesCount.
             " \n Amount of Mountains: ".$mountainsCount. " \n Amount of Plates: ".$platesCount.
             " \n Amount of Sea: ".$seaCount. " \n Amount of Swamps: ".$swampsCount.
             " \n Amount of Base: ".$baseCount. " For two teams \n Amount of Units: ".$unitCount.

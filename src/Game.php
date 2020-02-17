@@ -4,6 +4,7 @@ namespace Map;
 
 use Map\Game\Builder\BuildBaseWithUnits;
 use Map\Game\Builder\BuildComponents;
+use Map\Game\Builder\BuildView;
 use Map\Game\Collections\Map;
 use Map\Game\Components\Plate;
 use Map\Game\Contracts\Io\Writer;
@@ -35,7 +36,6 @@ class Game
 
         $generateTiles = new GenerateTiles();
         $tiles = $generateTiles->generateOnMap($map);
-
         $map->pushTiles($tiles);
 
         $buildComponents = new BuildComponents();
@@ -47,6 +47,13 @@ class Game
         $map = $buildBaseWithUnits->buildBaseWithUnits($map, $plates[$randomKey[0]],Parameters::TEAM_1);
         $map = $buildBaseWithUnits->buildBaseWithUnits($map, $plates[$randomKey[1]],Parameters::TEAM_2);
 
+        $buildView = new BuildView($map);
+        foreach ($buildView->view() as $line) {
+            for ($i = 0; $i <= count($line) - 1; $i++) {
+                $writer->write($line[$i]);
+            }
+            $writer->write("\n");
+        }
         $writer->writeln($map);
     }
 

@@ -3,9 +3,10 @@
 namespace Map\Game\Components;
 
 use Map\Game\Interfaces\Type;
+use Map\Game\Interfaces\ViewSymbol;
 use Map\Game\Units\Unit;
 
-class Component implements Type
+class Component implements Type, ViewSymbol
 {
     /** @var array  */
     protected $accessFor = [];
@@ -13,6 +14,8 @@ class Component implements Type
     protected $type;
     /** @var Tile */
     private $tile;
+    /** @var string */
+    protected $viewSymbol;
 
     /**
      * @return string
@@ -60,6 +63,14 @@ class Component implements Type
     public function getTile() : Tile
     {
         return $this->tile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getViewSymbol(): string
+    {
+        return $this->viewSymbol;
     }
 
 }

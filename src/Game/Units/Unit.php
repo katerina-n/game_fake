@@ -5,8 +5,9 @@ namespace Map\Game\Units;
 use Map\Game\Components\Component;
 use Map\Game\Interfaces\Team;
 use Map\Game\Interfaces\Type;
+use Map\Game\Interfaces\ViewSymbol;
 
-class Unit implements Type, Team
+class Unit implements Type, Team, ViewSymbol
 {
     /** @var int */
     protected $healthPoint;
@@ -24,6 +25,8 @@ class Unit implements Type, Team
 
     /** @var Component */
     private $component;
+    /** @var string */
+    protected $viewSymbol;
 
     /**
      * @return string
@@ -144,4 +147,12 @@ class Unit implements Type, Team
     {
         return $this->component;
     }
+    /**
+     * @return string
+     */
+    public function getViewSymbol(): string
+    {
+        return $this->viewSymbol;
+    }
+
 }

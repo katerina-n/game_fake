@@ -4,6 +4,7 @@ namespace Map\Game\Components;
 
 use Map\Game\Units\AirCraft;
 use Map\Game\Units\Warrior;
+use Map\Parameters;
 
 class Mountain extends Component
 {
@@ -11,6 +12,8 @@ class Mountain extends Component
 
     /** @var int */
     private $height;
+    /** @var string */
+    protected $viewSymbol = Parameters::VIEW_MOUNTAIN;
 
     /**
      * @return int
