@@ -7,7 +7,7 @@ use Map\Game\Units\Unit;
 
 abstract class GenerateUnit
 {
-    abstract function makeUnit() : Unit;
+    abstract protected function makeUnit() : Unit;
 
     /**
      * @param Component $component

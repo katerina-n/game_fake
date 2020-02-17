@@ -8,7 +8,7 @@ use Map\Game\Components\Sea;
 
 class GenerateSea extends GenerateComponent
 {
-    public function makeComponent(): Component
+    protected function makeComponent(): Component
     {
         return new Sea();
     }

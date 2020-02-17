@@ -8,7 +8,7 @@ use Map\Game\Components\Swamp;
 
 class GenerateSwamp extends GenerateComponent
 {
-    public function makeComponent(): Component
+    protected function makeComponent(): Component
     {
         return new Swamp();
     }

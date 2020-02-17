@@ -8,7 +8,7 @@ use Map\Game\Components\Mountain;
 
 class GenerateMountain extends GenerateComponent
 {
-    public function makeComponent(): Component
+    protected function makeComponent(): Component
     {
         return new Mountain();
     }

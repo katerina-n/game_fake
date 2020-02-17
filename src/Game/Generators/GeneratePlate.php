@@ -8,7 +8,7 @@ use Map\Game\Components\Plate;
 
 class GeneratePlate extends GenerateComponent
 {
-    public function makeComponent(): Component
+    protected function makeComponent(): Component
     {
         return new Plate();
     }

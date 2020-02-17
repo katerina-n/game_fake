@@ -8,7 +8,7 @@ use Map\Game\Units\Warrior;
 
 class GenerateWarrior extends GenerateUnit
 {
-    public function makeUnit(): Unit
+    protected function makeUnit(): Unit
     {
         return new Warrior();
     }

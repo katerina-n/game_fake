@@ -7,7 +7,7 @@ use Map\Game\Components\Tile;
 
 abstract class GenerateComponent
 {
-    abstract function makeComponent() : Component;
+    abstract protected function makeComponent() : Component;
 
     /**
      * @param Tile $tile

@@ -8,7 +8,7 @@ use Map\Game\Units\Unit;
 
 class GenerateAirCraft extends GenerateUnit
 {
-    public function makeUnit(): Unit
+    protected function makeUnit(): Unit
     {
         return new AirCraft();
     }
