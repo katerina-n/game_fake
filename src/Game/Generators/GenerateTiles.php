@@ -38,7 +38,7 @@ class GenerateTiles
     /**
      * @return array
      */
-    private function tilesArray() : array
+    public function tilesArray() : array
     {
         $tilesArray = [];
         for ($i = 0; $i <= $this->heightMap - 1; $i++ ) {
